@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Ignore the dataset
+severstal-steel-defect-detection*
+
+#Ignore VSCode configuration file
+.vscode*
