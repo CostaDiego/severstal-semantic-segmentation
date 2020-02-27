@@ -133,3 +133,10 @@ severstal-steel-defect-detection*
 
 #Ignore VSCode configuration file
 .vscode*
+
+#Ignore the CamVid git repository and its jupyter notebook
+./data*
+camVid.ipynb
+
+#Ignore the prototyping jupyter notebook
+prototyping.ipynb
