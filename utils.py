@@ -17,6 +17,10 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
 
         for ids in trainPath.iterdir():
             imageIds.append(os.path.split(str(ids))[1])
+        
+        for ids in imageIds:
+            if not str(os.path.splitext(str(ids))[1]) ==".jpg":
+                imageIds.remove(ids)
 
     if not os.path.exists(maskDir):
         os.mkdir(maskDir)
@@ -53,7 +57,9 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
 
             pxl_mask = sum(concat_pxl,[])
 
-            mask_img[pxl_mask] = clss
+            # mask_img[pxl_mask] = clss
+            for i in pxl_mask:
+                mask_img[i-1] = clss
 
         mask = np.reshape(mask_img, (IMAGE_WIDTH,IMAGE_HEIGHT)).T
 
