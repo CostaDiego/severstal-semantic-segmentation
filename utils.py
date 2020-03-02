@@ -1,8 +1,9 @@
 import pandas as pd
-from PIL import Image
 import numpy as np
 
-import matplotlib.image as plt
+# import matplotlib.image as plt
+import cv2
+import matplotlib.pyplot as pyplot
 import os
 from pathlib import Path
 
@@ -65,7 +66,8 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
 
         savePath = os.path.join(maskDir, mask_name)
 
-        plt.imsave(savePath, mask)
+        # plt.imsave(savePath, mask)
+        cv2.imwrite(savePath, mask)
 
         if trainDir:
             imageIds.remove(mask_name)
@@ -78,7 +80,8 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
             savePath = os.path.join(maskDir, ids)
 
             if not os.path.isfile(savePath):
-                plt.imsave(savePath, mask)
+                # plt.imsave(savePath, mask)
+                cv2.imwrite(savePath, mask)
             else:
                 overwrited_msks += 1
 
@@ -86,4 +89,15 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
         f"The script ended with {overwrited_msks}",
         "attempts to overwrite a preexistent mask"
     )
-    
+
+def visualize(**images):
+    """PLot images in one row."""
+    n = len(images)
+    pyplot.figure(figsize=(16, 5))
+    for i, (name, image) in enumerate(images.items()):
+        pyplot.subplot(1, n, i + 1)
+        pyplot.xticks([])
+        pyplot.yticks([])
+        pyplot.title(' '.join(name.split('_')).title())
+        pyplot.imshow(image)
+    pyplot.show()
