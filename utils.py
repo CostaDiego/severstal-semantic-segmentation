@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 
-# import matplotlib.image as plt
 import cv2
 import matplotlib.pyplot as pyplot
 import os
@@ -13,7 +12,6 @@ IMAGE_HEIGHT = 256
 def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
     if trainDir:
         trainPath = Path(trainDir)
-        # baseFolder = trainDir
         imageIds = []
 
         for ids in trainPath.iterdir():
@@ -66,7 +64,6 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
 
         savePath = os.path.join(maskDir, mask_name)
 
-        # plt.imsave(savePath, mask)
         cv2.imwrite(savePath, mask)
 
         if trainDir:
@@ -80,7 +77,6 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
             savePath = os.path.join(maskDir, ids)
 
             if not os.path.isfile(savePath):
-                # plt.imsave(savePath, mask)
                 cv2.imwrite(savePath, mask)
             else:
                 overwrited_msks += 1
