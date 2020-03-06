@@ -3,11 +3,15 @@ import numpy as np
 
 import cv2
 import matplotlib.pyplot as pyplot
+
 import os
 from pathlib import Path
+import shutil
 
 IMAGE_WIDTH = 1600
 IMAGE_HEIGHT = 256
+
+MASK_MINUMUM = 6000
 
 def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
     if trainDir:
@@ -97,3 +101,25 @@ def visualize(**images):
         pyplot.title(' '.join(name.split('_')).title())
         pyplot.imshow(image)
     pyplot.show()
+
+def validadeFolder(
+    path: str,
+    renew: bool = False,
+    maskThreshold = MASK_MINUMUM):
+    path = str(path)
+
+    if os.path.isdir(path) and renew:
+        shutil.rmtree(path)
+        os.mkdir(path)
+    
+    elif not os.path.isdir(path):
+        os.mkdir(path)
+    
+    
+    files = os.listdir(path)
+
+    if len(files) >= maskThreshold:
+        return True
+
+    else:
+        return False
