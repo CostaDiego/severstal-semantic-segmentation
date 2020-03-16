@@ -8,10 +8,8 @@ import os
 from pathlib import Path
 import shutil
 
-IMAGE_WIDTH = 1600
-IMAGE_HEIGHT = 256
-
-MASK_MINUMUM = 6000
+_IMAGE_WIDTH = 1600
+_IMAGE_HEIGHT = 256
 
 def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
     if trainDir:
@@ -35,7 +33,7 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
         sml_df = img_df[img_df['ImageId'] == str(ids)]
         values = sml_df.values
 
-        mask_img = np.zeros((IMAGE_HEIGHT*IMAGE_WIDTH,1), dtype=int)
+        mask_img = np.zeros((_IMAGE_HEIGHT*_IMAGE_WIDTH,1), dtype=int)
         mask_name = None
 
         for key in range(len(values)):
@@ -64,7 +62,7 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
             for i in pxl_mask:
                 mask_img[i-1] = clss
 
-        mask = np.reshape(mask_img, (IMAGE_WIDTH,IMAGE_HEIGHT)).T
+        mask = np.reshape(mask_img, (_IMAGE_WIDTH,_IMAGE_HEIGHT)).T
 
         savePath = os.path.join(maskDir, mask_name)
 
@@ -76,8 +74,8 @@ def generateMask(dataFrame, maskDir = "masksDir", trainDir = None):
     if trainDir:
         overwrited_msks = 0
         for ids in imageIds:
-            mask_img = np.zeros((IMAGE_HEIGHT*IMAGE_WIDTH,1), dtype=int)
-            mask = np.reshape(mask_img, (IMAGE_WIDTH,IMAGE_HEIGHT)).T
+            mask_img = np.zeros((_IMAGE_HEIGHT*_IMAGE_WIDTH,1), dtype=int)
+            mask = np.reshape(mask_img, (_IMAGE_WIDTH,_IMAGE_HEIGHT)).T
             savePath = os.path.join(maskDir, ids)
 
             if not os.path.isfile(savePath):
