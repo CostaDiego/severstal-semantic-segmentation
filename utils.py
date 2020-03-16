@@ -104,22 +104,18 @@ def visualize(**images):
 
 def validadeFolder(
     path: str,
-    renew: bool = False,
-    maskThreshold = MASK_MINUMUM):
+    renew: bool = False):
     path = str(path)
 
     if os.path.isdir(path) and renew:
         shutil.rmtree(path)
         os.mkdir(path)
+        return True
     
+    elif os.path.isdir(path) and not renew:
+        return False
+
     elif not os.path.isdir(path):
         os.mkdir(path)
-    
-    
-    files = os.listdir(path)
-
-    if len(files) >= maskThreshold:
         return True
-
-    else:
-        return False
+    
